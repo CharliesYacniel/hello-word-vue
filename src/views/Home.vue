@@ -38,15 +38,15 @@
               elevation="6"
             >Ejecutar</v-btn>
         </v-tab> -->
-        <!-- <v-tab>
+        <v-tab>
           <v-btn
                 color="accent"
                 elevation="6"
                 large
                 x-small
-                v-on:click= "exportData()"
-              >Exportar datos</v-btn>
-        </v-tab> -->
+                v-on:click= "saveProgram()"
+              >Guardar Programa</v-btn>
+        </v-tab>
         <v-tab>
           <v-btn
                 color="accent"
@@ -96,6 +96,16 @@
       </div>
     </div>
 
+   
+     <div><h4>Programas guardados</h4></div>
+    <div class="col">
+      <div class="" v-for="cli in clientes" :key="cli.uid">
+        <i class="fab fa-facebook"></i><span> {{cli.nameProgram}} </span>
+      </div>
+    </div>
+
+
+  
             </v-sheet>
           </v-col>
 
@@ -178,6 +188,8 @@ import Drawflow from 'drawflow'
 // import Number from '@/components/Number.vue'
 // import Add from '@/components/Add.vue'
 // import Assign from '@/components/Assign.vue'
+
+import { ProgramsService } from '../services/ProgramsService';
 /*eslint-disable */
 // import PxHeader from '@/components/PxHeader.vue'
 import styleDrawflow from 'drawflow/dist/drawflow.min.css' // eslint-disable-line no-use-before-define
@@ -200,9 +212,13 @@ export default {
         'Archivo',
         'About',
       ],
+      clientes:null
     }
     },
   mounted() {
+
+    
+    this.obtenerPrograms()
     const id = document.getElementById("drawflow");
     this.editor = new Drawflow(id, Vue);
     // this.editor.reroute = true;
@@ -251,12 +267,41 @@ export default {
   
   },
   methods:{
+     obtenerPrograms() {
+        console.log('llamando API')
+      return ProgramsService.obtenerPrograms()
+        .then((clientes) => {
+          console.log(clientes)
+          this.clientes = clientes.getAll;
+        });
+    }, 
     exportData(){
       var exportdata = this.editor.export();
       console.log('exportdata',exportdata)
     },
+    saveProgram(){
+      
+      console.log('Save Program')
+
+     const data= {
+        "nameProgram": "sumThrreNumber",
+        "user": "CharliesTejada",
+        "language": "python",
+        "codeTex": "import sys i=0 while i<10: print ('Hello') sys.stdout.flush() i=i+1 n1 = 3 n2 = 10 suma = n1+n2 print('La suma es: ', suma)",
+        "codeCompiled": "aun no compila"
+      }
+      return ProgramsService.agregarPrograms(data)
+          .then((programs) => {
+            console.log(programs.create)
+          });
+    },
     executeCode(){
       console.log('Exceute code')
+      const data={"name":"Charlies Yacniel"}
+      return ProgramsService.ejecutarProgram(data)
+          .then((programs) => {
+            console.log(programs)
+          });
     },
     allowDrop:function(event) {
       // console.log(event)
@@ -353,7 +398,7 @@ export default {
         default:
       }
     },
-   
+  
   }
 }
 </script>
