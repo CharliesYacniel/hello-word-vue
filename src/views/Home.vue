@@ -279,10 +279,7 @@ export default {
       var exportdata = this.editor.export();
       console.log('exportdata',exportdata)
     },
-    saveProgram(){
-      
-      console.log('Save Program')
-
+    saveProgram(){      
      const data= {
         "nameProgram": "sumThrreNumber",
         "user": "CharliesTejada",
@@ -297,7 +294,18 @@ export default {
     },
     executeCode(){
       console.log('Exceute code')
-      const data={"name":"Charlies Yacniel"}
+       const data= {
+        "codeTex": `import sys
+i=0
+while i<10:
+    print ("Hello")
+    sys.stdout.flush()
+    i=i+1
+n1 = 3
+n2 = 10
+suma = n1+n2
+print("La suma es: ", suma)`
+      }
       return ProgramsService.ejecutarProgram(data)
           .then((programs) => {
             console.log(programs)

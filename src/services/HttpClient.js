@@ -9,12 +9,13 @@ const manejarResponse = (Response) => {
 
 export const HttpClient = {
   post: (ruta, datos) => fetch(RUTA_SERVIDOR + ruta, {
-        credentials: 'include',
+        // credentials: 'include',
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-          },
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // },
         body: JSON.stringify(datos),
+        // body: datos
     })
         .then(r => r.json())
         .then(manejarResponse)

@@ -10,6 +10,7 @@ export const ProgramsService = {
       .then(registrado => registrado);
   },
   async agregarPrograms(Programs) {
+    // console.log("Programs",Programs)
     return HttpClient.post('/programs/create', Programs)
       .then(registrado => registrado);
   },
