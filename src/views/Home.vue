@@ -21,16 +21,17 @@
         >
           {{ link }}
         </v-tab>
-        <!-- <v-tab>
+        <v-tab>
           <v-btn
                 color="accent"
                 elevation="6"
                 large
                 x-small
+                v-on:click= "compiledCode()"
               >Compilar</v-btn>
         </v-tab>
 
-        <v-tab>
+        <!-- <v-tab>
         <v-btn
               color="accent"
               large
@@ -152,15 +153,16 @@
           >
             <v-sheet
               rounded="lg"
-              min-height="400"
+              min-height="800"
             >
               
             <pre></pre>
              <v-textarea
                 outlined
                 name="code"
+                rows="15"
                 label="View Code"
-                value="n1=float(input('Intro número uno: '))  n2=float(input('Intro numero dos: ')) suma=n1+n2 print('La suma es: ',suma)"
+                :value="cadena_input"
               >
               </v-textarea>
 
@@ -168,7 +170,8 @@
                 outlined
                 name="console"
                 label="Console"
-                value=">La suma es : 23"
+                rows="10"
+                :value="cadena_output"
               ></v-textarea>
             </v-sheet>
           </v-col>
@@ -207,6 +210,8 @@ export default {
       transform:'',
       lock:'',
       unlock:'',
+      cadena_input:'',
+      cadena_output:'',
       links: [
         'Inicio',
         'Archivo',
@@ -284,17 +289,6 @@ export default {
         "nameProgram": "sumThrreNumber",
         "user": "CharliesTejada",
         "language": "python",
-        "codeTex": "import sys i=0 while i<10: print ('Hello') sys.stdout.flush() i=i+1 n1 = 3 n2 = 10 suma = n1+n2 print('La suma es: ', suma)",
-        "codeCompiled": "aun no compila"
-      }
-      return ProgramsService.agregarPrograms(data)
-          .then((programs) => {
-            console.log(programs.create)
-          });
-    },
-    executeCode(){
-      console.log('Exceute code')
-       const data= {
         "codeTex": `import sys
 i=0
 while i<10:
@@ -304,13 +298,74 @@ while i<10:
 n1 = 3
 n2 = 10
 suma = n1+n2
+print("La suma es: ", suma)`,
+        "codeCompiled": "aun no compila"
+      }
+      return ProgramsService.agregarPrograms(data)
+          .then((programs) => {
+            console.log(programs.create)
+          });
+    },
+    executeCode(){
+      
+      
+      console.log('Exceute code')
+       const data= {
+        "codeTex": `import sys
+n1 = 3
+n2 = 10
+suma = n1+n2
 print("La suma es: ", suma)`
       }
+      this.cadena_input = data.codeTex
       return ProgramsService.ejecutarProgram(data)
           .then((programs) => {
             console.log(programs)
+            this.cadena_output = programs.obj
           });
     },
+    compiledCode( ){
+      this.cadena_input =''
+      // console.log(exportdata)
+      // translateProgram()
+      // this.cadena_input = exportdata.drawflow.Home.data
+      // this.cadena_input= JSON.stringify(this.cadena_input)
+      this.translateProgram()
+      // console.log(this.cadena_input)
+    },
+     translateProgram(){
+      //  var dataProgram = JSON.stringify(this.editor.export(), null,4)
+       var dataProgram=this.editor.export()
+       dataProgram = dataProgram.drawflow.Home.data
+       dataProgram = JSON.stringify(dataProgram)
+       dataProgram = JSON.parse(dataProgram)
+
+        var arrayProg=[]
+      //  console.log("dataProgram",dataProgram)
+       var cadenaProg="import sys \n";
+       
+      
+       for (const iterator in dataProgram) {
+         console.log("iterator",iterator)
+         arrayProg.push(iterator)
+       }
+       
+
+       const person = {fname:"John", lname:"Doe", age:25};
+
+        let text = "";
+        for (let x in person) {
+          text += person[x];
+        }
+        console.log("text",text)
+        console.log("arrayProg",arrayProg)
+
+          
+        this.cadena_input = cadenaProg
+        console.log("cadenaProg",cadenaProg)
+
+
+     },
     allowDrop:function(event) {
       // console.log(event)
       // console.log('previniendo evento')
