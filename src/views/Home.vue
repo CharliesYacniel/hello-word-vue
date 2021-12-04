@@ -122,8 +122,8 @@
             <div class="col-right">
               <div class="menu">
                   <ul>
-                    <li v-on:click="editor.changeModule('Home'); changeModule(event);" class="selected">New Diagram</li>
-                    <li v-on:click="editor.changeModule('Other'); changeModule(event);">Test Diagram</li>
+                    <li v-on:click="changeModule();" class="selected">New Diagram</li>
+                    <!-- <li v-on:click="editor.changeModule('Other'); changeModule(event);">Test Diagram</li> -->
                   </ul>
                 </div>
               </div>
@@ -226,13 +226,15 @@ export default {
     this.obtenerPrograms()
     const id = document.getElementById("drawflow");
     this.editor = new Drawflow(id, Vue);
-    // this.editor.reroute = true;
-    // this.editor.start();
+    this.editor.reroute = true;
+    this.editor.reroute_fix_curvature = true;
+    this.editor.force_first_input = false;
     
-    const dataToImport = {"drawflow":{"Home":{"data":{"1":{"id":1,"name":"add","data":{},"class":"add","html":"\n        <div>\n          <h2> ADD </h2>\n          <p>Suma 2 elmentos</p>\n        </div>\n        ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"3","input":"output_1"}]},"input_2":{"connections":[{"node":"4","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"2","output":"input_1"}]}},"pos_x":274,"pos_y":153},"2":{"id":2,"name":"assing","data":{},"class":"assing","html":"\n         <div>\n          <h2>ASSING</h2>\n          <p>Resultado:{{23}}</p>\n        </div>\n        ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"1","input":"output_1"}]}},"outputs":{},"pos_x":504,"pos_y":150},"3":{"id":3,"name":"number","data":{"value":"10"},"class":"number","html":"\n           <div>\n            <h2>NUMBER</h2>\n            <p>Enter number</p>\n            <input type=\"number\" df-value>\n          </div>\n          ","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"1","output":"input_1"}]}},"pos_x":48,"pos_y":24},"4":{"id":4,"name":"number","data":{"value":"13"},"class":"number","html":"\n           <div>\n            <h2>NUMBER</h2>\n            <p>Enter number</p>\n            <input type=\"number\" df-value>\n          </div>\n          ","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"1","output":"input_2"}]}},"pos_x":51,"pos_y":249}}}}}
+    // const dataToImport = {"drawflow":{"Home":{"data":{"1":{"id":1,"name":"add","data":{},"class":"add","html":"\n        <div>\n          <h2> ADD </h2>\n          <p>Suma 2 elmentos</p>\n        </div>\n        ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"3","input":"output_1"}]},"input_2":{"connections":[{"node":"4","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"2","output":"input_1"}]}},"pos_x":274,"pos_y":153},"2":{"id":2,"name":"assing","data":{},"class":"assing","html":"\n         <div>\n          <h2>ASSING</h2>\n          <p>Resultado:{{23}}</p>\n        </div>\n        ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"1","input":"output_1"}]}},"outputs":{},"pos_x":504,"pos_y":150},"3":{"id":3,"name":"number","data":{"value":"10"},"class":"number","html":"\n           <div>\n            <h2>NUMBER</h2>\n            <p>Enter number</p>\n            <input type=\"number\" df-value>\n          </div>\n          ","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"1","output":"input_1"}]}},"pos_x":48,"pos_y":24},"4":{"id":4,"name":"number","data":{"value":"13"},"class":"number","html":"\n           <div>\n            <h2>NUMBER</h2>\n            <p>Enter number</p>\n            <input type=\"number\" df-value>\n          </div>\n          ","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"1","output":"input_2"}]}},"pos_x":51,"pos_y":249}}}}}
+    // const dataToImport =  {"drawflow":{"Home":{"data":{"1":{"id":1,"name":"welcome","data":{},"class":"welcome","html":"\n    <div>\n      <div class=\"title-box\">👏 Welcome!!</div>\n      <div class=\"box\">\n        <p>Simple flow library <b>demo</b>\n        <a href=\"https://github.com/jerosoler/Drawflow\" target=\"_blank\">Drawflow</a> by <b>Jero Soler</b></p><br>\n\n        <p>Multiple input / outputs<br>\n           Data sync nodes<br>\n           Import / export<br>\n           Modules support<br>\n           Simple use<br>\n           Type: Fixed or Edit<br>\n           Events: view console<br>\n           Pure Javascript<br>\n        </p>\n        <br>\n        <p><b><u>Shortkeys:</u></b></p>\n        <p>🎹 <b>Delete</b> for remove selected<br>\n        💠 Mouse Left Click == Move<br>\n        ❌ Mouse Right == Delete Option<br>\n        🔍 Ctrl + Wheel == Zoom<br>\n        📱 Mobile support<br>\n        ...</p>\n      </div>\n    </div>\n    ", "typenode": false, "inputs":{},"outputs":{},"pos_x":50,"pos_y":50},"2":{"id":2,"name":"slack","data":{},"class":"slack","html":"\n          <div>\n            <div class=\"title-box\"><i class=\"fab fa-slack\"></i> Slack chat message</div>\n          </div>\n          ", "typenode": false, "inputs":{"input_1":{"connections":[{"node":"7","input":"output_1"}]}},"outputs":{},"pos_x":1028,"pos_y":87},"3":{"id":3,"name":"telegram","data":{"channel":"channel_2"},"class":"telegram","html":"\n          <div>\n            <div class=\"title-box\"><i class=\"fab fa-telegram-plane\"></i> Telegram bot</div>\n            <div class=\"box\">\n              <p>Send to telegram</p>\n              <p>select channel</p>\n              <select df-channel>\n                <option value=\"channel_1\">Channel 1</option>\n                <option value=\"channel_2\">Channel 2</option>\n                <option value=\"channel_3\">Channel 3</option>\n                <option value=\"channel_4\">Channel 4</option>\n              </select>\n            </div>\n          </div>\n          ", "typenode": false, "inputs":{"input_1":{"connections":[{"node":"7","input":"output_1"}]}},"outputs":{},"pos_x":1032,"pos_y":184},"4":{"id":4,"name":"email","data":{},"class":"email","html":"\n            <div>\n              <div class=\"title-box\"><i class=\"fas fa-at\"></i> Send Email </div>\n            </div>\n            ", "typenode": false, "inputs":{"input_1":{"connections":[{"node":"5","input":"output_1"}]}},"outputs":{},"pos_x":1033,"pos_y":439},"5":{"id":5,"name":"template","data":{"template":"Write your template"},"class":"template","html":"\n            <div>\n              <div class=\"title-box\"><i class=\"fas fa-code\"></i> Template</div>\n              <div class=\"box\">\n                Ger Vars\n                <textarea df-template></textarea>\n                Output template with vars\n              </div>\n            </div>\n            ", "typenode": false, "inputs":{"input_1":{"connections":[{"node":"6","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"4","output":"input_1"},{"node":"11","output":"input_1"}]}},"pos_x":607,"pos_y":304},"6":{"id":6,"name":"github","data":{"name":"https://github.com/jerosoler/Drawflow"},"class":"github","html":"\n          <div>\n            <div class=\"title-box\"><i class=\"fab fa-github \"></i> Github Stars</div>\n            <div class=\"box\">\n              <p>Enter repository url</p>\n            <input type=\"text\" df-name>\n            </div>\n          </div>\n          ", "typenode": false, "inputs":{},"outputs":{"output_1":{"connections":[{"node":"5","output":"input_1"}]}},"pos_x":341,"pos_y":191},"7":{"id":7,"name":"facebook","data":{},"class":"facebook","html":"\n        <div>\n          <div class=\"title-box\"><i class=\"fab fa-facebook\"></i> Facebook Message</div>\n        </div>\n        ", "typenode": false, "inputs":{},"outputs":{"output_1":{"connections":[{"node":"2","output":"input_1"},{"node":"3","output":"input_1"},{"node":"11","output":"input_1"}]}},"pos_x":347,"pos_y":87},"11":{"id":11,"name":"log","data":{},"class":"log","html":"\n            <div>\n              <div class=\"title-box\"><i class=\"fas fa-file-signature\"></i> Save log file </div>\n            </div>\n            ", "typenode": false, "inputs":{"input_1":{"connections":[{"node":"5","input":"output_1"},{"node":"7","input":"output_1"}]}},"outputs":{},"pos_x":1031,"pos_y":363}}},"Other":{"data":{"8":{"id":8,"name":"personalized","data":{},"class":"personalized","html":"\n            <div>\n              Personalized\n            </div>\n            ", "typenode": false, "inputs":{"input_1":{"connections":[{"node":"12","input":"output_1"},{"node":"12","input":"output_2"},{"node":"12","input":"output_3"},{"node":"12","input":"output_4"}]}},"outputs":{"output_1":{"connections":[{"node":"9","output":"input_1"}]}},"pos_x":764,"pos_y":227},"9":{"id":9,"name":"dbclick","data":{"name":"Hello World!!"},"class":"dbclick","html":"\n            <div>\n            <div class=\"title-box\"><i class=\"fas fa-mouse\"></i> Db Click</div>\n              <div class=\"box dbclickbox\" ondblclick=\"showpopup(event)\">\n                Db Click here\n                <div class=\"modal\" style=\"display:none\">\n                  <div class=\"modal-content\">\n                    <span class=\"close\" onclick=\"closemodal(event)\">&times;</span>\n                    Change your variable {name} !\n                    <input type=\"text\" df-name>\n                  </div>\n\n                </div>\n              </div>\n            </div>\n            ", "typenode": false, "inputs":{"input_1":{"connections":[{"node":"8","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"12","output":"input_2"}]}},"pos_x":209,"pos_y":38},"12":{"id":12,"name":"multiple","data":{},"class":"multiple","html":"\n            <div>\n              <div class=\"box\">\n                Multiple!\n              </div>\n            </div>\n            ", "typenode": false, "inputs":{"input_1":{"connections":[]},"input_2":{"connections":[{"node":"9","input":"output_1"}]},"input_3":{"connections":[]}},"outputs":{"output_1":{"connections":[{"node":"8","output":"input_1"}]},"output_2":{"connections":[{"node":"8","output":"input_1"}]},"output_3":{"connections":[{"node":"8","output":"input_1"}]},"output_4":{"connections":[{"node":"8","output":"input_1"}]}},"pos_x":179,"pos_y":272}}}}}
   
     this.editor.start();
-    this.editor.import(dataToImport);
+    // this.editor.import(dataToImport);
 
     // const props = {};
     // const options = {};
@@ -310,12 +312,15 @@ print("La suma es: ", suma)`,
       
       
       console.log('Exceute code')
+//        const data= {
+//         "codeTex": `import sys
+// n1 = 3
+// n2 = 10
+// suma = n1+n2
+// print("La suma es: ", suma)`
+//       }
        const data= {
-        "codeTex": `import sys
-n1 = 3
-n2 = 10
-suma = n1+n2
-print("La suma es: ", suma)`
+        "codeTex": this.translateProgram()
       }
       this.cadena_input = data.codeTex
       return ProgramsService.ejecutarProgram(data)
@@ -325,45 +330,72 @@ print("La suma es: ", suma)`
           });
     },
     compiledCode( ){
-      this.cadena_input =''
+      // this.cadena_input =''
       // console.log(exportdata)
       // translateProgram()
       // this.cadena_input = exportdata.drawflow.Home.data
       // this.cadena_input= JSON.stringify(this.cadena_input)
-      this.translateProgram()
-      // console.log(this.cadena_input)
+      this.cadena_input=this.translateProgram()
+      console.log(this.cadena_input)
     },
      translateProgram(){
-      //  var dataProgram = JSON.stringify(this.editor.export(), null,4)
-       var dataProgram=this.editor.export()
-       dataProgram = dataProgram.drawflow.Home.data
-       dataProgram = JSON.stringify(dataProgram)
-       dataProgram = JSON.parse(dataProgram)
-
-        var arrayProg=[]
-      //  console.log("dataProgram",dataProgram)
-       var cadenaProg="import sys \n";
-       
+      this.cadena_input =''
       
-       for (const iterator in dataProgram) {
-         console.log("iterator",iterator)
-         arrayProg.push(iterator)
-       }
+    var exportvalue = null;
+    exportvalue = this.editor.export();
+    this.editor.import(exportvalue);
+    var dataProgram = exportvalue.drawflow.Home.data
+    console.log("dataProgram",dataProgram)
+    // console.log("dataProgram[0]",dataProgram["1"])
+
+
+
+    var i=1; 
+    // var variable_counter=1; 
+    /*eslint-disable */
+    var cadenaProg=""
+    var cadenaNumbers=""
+    var cadenaAssing=""
+    var cadenaAdd=""
+    cadenaProg+="import sys \n"
+
+    for (const key in dataProgram) {
+        // console.log("key",key)
+        var node = dataProgram[i.toString()];
+        console.log("node",node)
+        // console.log("node",node.name)
+       switch (node.name) {
+         case "number":
+           cadenaNumbers+=node.outputs.output_1.connections["0"].output+" = "+node.data.value;
+          cadenaNumbers+="\n"
+           break;
+         case "assing":
+           cadenaAssing+="assing = "
+           break;
+         case "add":
+           cadenaAdd+=(node.inputs.input_1.connections["0"].input).replace("output_","input_")+" + "+(node.inputs.input_2.connections["0"].input).replace("output_1","input_2");
+           cadenaAdd+="\n"
+           break;
        
+         default:
+           break;
+       }
 
-       const person = {fname:"John", lname:"Doe", age:25};
+        cadenaProg+="\n"
+        i++
+    }
+      cadenaProg+=cadenaNumbers+"\n"+cadenaAssing+cadenaAdd
+      cadenaProg+='print("Assing is: ", assing)\n'
+      // console.log(cadenaProg)
+   
 
-        let text = "";
-        for (let x in person) {
-          text += person[x];
-        }
-        console.log("text",text)
-        console.log("arrayProg",arrayProg)
+        // for (let index = 0; index < 100; index++) {
+        //   cadenaProg.toString().replace("input_1","output_1")
+        //   console.log(cadenaProg)
+        // }
 
-          
-        this.cadena_input = cadenaProg
-        console.log("cadenaProg",cadenaProg)
 
+      return  cadenaProg
 
      },
     allowDrop:function(event) {
@@ -375,6 +407,8 @@ print("La suma es: ", suma)`
      this.mobile_last_move = ev;
    },
     clearModuleSelected(){
+      this.cadena_input =''
+      this.cadena_output =''
       this.editor.clearModuleSelected()
     },
     drag:function(event) {
@@ -461,7 +495,14 @@ print("La suma es: ", suma)`
         default:
       }
     },
-  
+  changeModule(event) {
+    this.editor.changeModule('Home');
+      var all = document.querySelectorAll(".menu ul li");
+        for (var i = 0; i < all.length; i++) {
+          all[i].classList.remove('selected');
+        }
+      event.target.classList.add('selected');
+    }
   }
 }
 </script>
